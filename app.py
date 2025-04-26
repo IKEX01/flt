@@ -3,21 +3,15 @@ import os
 import yt_dlp
 import re
 import logging
-from dotenv import load_dotenv
 import validators
 from flask_cors import CORS
 
 from logger import setup_logging
-
-# Load environment variables
-load_dotenv()
+from config import PROXY, FLASK_RUN_HOST, FLASK_RUN_PORT
 
 # Setup logging
 setup_logging()
 logger = logging.getLogger(__name__)
-
-# Get proxy from environment
-PROXY = os.getenv('PROXY', '')
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -72,7 +66,7 @@ def download():
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'noplaylist': True,
+        'noplaylist': False,
         'quiet': False,
     }
 
@@ -87,8 +81,4 @@ def download():
 
 if __name__ == '__main__':
     os.makedirs('downloads', exist_ok=True)
-
-    host = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
-    port = int(os.getenv('FLASK_RUN_PORT', 5000))
-
-    app.run(host=host, port=port)
+    app.run(host=FLASK_RUN_HOST, port=FLASK_RUN_PORT)
