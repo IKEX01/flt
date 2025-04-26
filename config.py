@@ -1,4 +1,12 @@
 import os
+from dotenv import load_dotenv
 
-# Set your proxy here or use environment variables
-PROXY = os.getenv('PROXY', 'http://your_proxy:port') # Example : 'http://127.0.0.1:8080'
+# Load environment variables from .env
+load_dotenv()
+
+# Proxy configuration
+PROXY = os.getenv('PROXY', '')
+
+# Server configuration
+FLASK_RUN_HOST = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
+FLASK_RUN_PORT = int(os.getenv('FLASK_RUN_PORT', 5000))
